@@ -1,0 +1,36 @@
+{
+  "name": "jsharmony-db-sqlite",
+  "version": "1.0.0",
+  "description": "jsHarmony Database Connector for SQLite",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apHarmony/jsharmony-db-sqlite"
+  },
+  "keywords": [
+    "jsHarmony",
+    "Database",
+    "Driver",
+    "SQLite",
+    "SQLite3"
+  ],
+  "author": "apHarmony <contact@apharmony.com> (http://www.apharmony.com/)",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/apHarmony/jsharmony-db-sqlite/issues"
+  },
+  "homepage": "https://github.com/apHarmony/jsharmony-db-sqlite",
+  "dependencies": {
+    "async": "^2.1.4",
+    "jsharmony-db": ">=1.0.13",
+    "lodash": "^4.14.0",
+    "moment": "^2.17.1",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  }
+}
