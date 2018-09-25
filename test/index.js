@@ -22,10 +22,10 @@ var JSHdb = require('jsharmony-db');
 var assert = require('assert');
 
 
-global.dbconfig = { _driver: new JSHsqlite(), database: ':memory:' };
+var dbconfig = { _driver: new JSHsqlite(), database: ':memory:' };
 
 function initDB(db){
-  return new JSHdb();
+  return new JSHdb(dbconfig);
 };
 function disposeDB(db, cb){
   db.Close(cb);
@@ -39,7 +39,7 @@ describe('Basic',function(){
   it('Select', function (done) {
     //Connect to database and get data
     var c_id = '10';
-    //global.dbconfig.database = './test.db';
+    //dbconfig.database = './test.db';
     db.Command('',"drop table if exists c; create table c (c_id integer);insert into c(c_id) values (10)",[],{},function(err,rslt){
       assert(!err,'Table c created successfully');
       db.Recordset('','select * from c where c_id=@c_id',[JSHdb.types.BigInt],{'c_id': c_id},function(err,rslt){

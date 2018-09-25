@@ -13,8 +13,8 @@ npm install jsharmony-db-sqlite --save
 ```javascript
 var JSHsqlite = require('jsharmony-db-sqlite');
 var JSHdb = require('jsharmony-db');
-global.dbconfig = { _driver: new JSHsqlite(), filename: ":memory:" /* or path */ };
-var db = new JSHdb();
+var dbconfig = { _driver: new JSHsqlite(), filename: ":memory:" /* or path */ };
+var db = new JSHdb(dbconfig);
 db.Recordset('','select * from c where c_id >= @c_id',[JSHdb.types.BigInt],{'c_id': 10},function(err,rslt){
   console.log(rslt);
   done();
