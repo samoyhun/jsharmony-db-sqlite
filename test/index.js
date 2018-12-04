@@ -20,6 +20,7 @@ along with this package.  If not, see <http://www.gnu.org/licenses/>.
 var JSHsqlite = require('../index');
 var JSHdb = require('jsharmony-db');
 var assert = require('assert');
+var moment = require('moment');
 
 
 var dbconfig = { _driver: new JSHsqlite(), database: ':memory:' };
@@ -682,6 +683,62 @@ describe('Basic',function(){
     db.SQLExt.Scripts['test'] = {};
     db.SQLExt.Scripts['test']['dropfaketable'] = ["drop table if exists fakedbthatdoesnotexist"];
     db.RunScripts(db.platform, ['test','dropfaketable'],{},function(err,rslt,stats){
+      assert(!err,'Success');
+      return done();
+    });
+  });
+  it('Date passthru', function (done) {
+    //Connect to database and get data
+    db.Scalar('',"select strftime('%m/%d/%Y',@dt)",[JSHdb.types.Date],{'dt': moment('2018-12-03').toDate()},function(err,rslt){
+      assert(!err,'Success');
+      assert(rslt=='12/03/2018','Date passthru');
+      return done();
+    });
+  });
+  it('DateTime passthru', function (done) {
+    //Connect to database and get data
+    db.Scalar('',"select strftime('%m/%d/%Y',@dt)",[JSHdb.types.DateTime(7)],{'dt': moment('2018-12-03').toDate()},function(err,rslt){
+      assert(!err,'Success');
+      assert(rslt=='12/03/2018','Date passthru');
+      return done();
+    });
+  });
+  it('Foreign Key Created', function(done){
+    db.Command('','\
+      create table parent(parent_id int primary key); \
+      create table child( \
+        child_id int primary key, \
+        parent_id int, \
+        foreign key(parent_id) references parent(parent_id) \
+      ); \
+      insert into parent(parent_id) values (1); \
+      insert into child(parent_id,child_id) values (1,1); \
+      insert into child(parent_id,child_id) values (1,2); \
+      ',[],{},function(err,rslt){
+      assert(!err,'Success');
+      return done();
+    });
+  });
+  it('Foreign Key Constraint - Parent', function(done){
+    db.Command('','\
+      delete from parent where parent_id=1; \
+      ',[],{},function(err,rslt){
+      assert(err && err.message && (err.message.indexOf('FOREIGN KEY constraint failed') >= 0),'Foreign Key works')
+      return done();
+    });
+  });
+  it('Foreign Key Constraint - Child', function(done){
+    db.Command('','\
+      update child set parent_id=2; \
+      ',[],{},function(err,rslt){
+      assert(err && err.message && (err.message.indexOf('FOREIGN KEY constraint failed') >= 0),'Foreign Key works')
+      return done();
+    });
+  });
+  it('Foreign Key Constraint - Success', function(done){
+    db.Command('','\
+      delete from child; delete from parent; \
+      ',[],{},function(err,rslt){
       assert(!err,'Success');
       return done();
     });
