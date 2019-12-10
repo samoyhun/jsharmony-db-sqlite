@@ -1,6 +1,6 @@
 {
   "name": "jsharmony-db-sqlite",
-  "version": "1.1.31",
+  "version": "1.1.32",
   "description": "jsHarmony Database Connector for SQLite",
   "main": "index.js",
   "scripts": {
