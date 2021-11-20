@@ -1,6 +1,6 @@
 {
   "name": "jsharmony-db-sqlite",
-  "version": "1.1.50",
+  "version": "1.2.0",
   "description": "jsHarmony Database Connector for SQLite",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   "homepage": "https://github.com/apHarmony/jsharmony-db-sqlite",
   "dependencies": {
     "async": "^2.6.2",
-    "jsharmony-db": "^1.1.17",
+    "jsharmony-db": "^1.2.0",
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "sqlite3": "^4.1.1"
