@@ -20,22 +20,16 @@ along with this package.  If not, see <http://www.gnu.org/licenses/>.
 var JSHsqlite = require('../index');
 var JSHdb = require('jsharmony-db');
 var shouldGenerateFormSql = require('jsharmony-db/test/shared/sql');
-var assert = require('assert');
-var path = require('path');
-var fs = require('fs');
-var _ = require('lodash');
-var os = require('os');
-var moment = require('moment');
 
 var dbconfig = { _driver: new JSHsqlite(), database: ':memory:' };
 
 var db = new JSHdb(dbconfig);
 db.platform.Config.schema_replacement = [
-  { 
+  {
     "search_schema": "{schema}.",
     "replace_schema": "{schema}_"
   },
-  { 
+  {
     "search_schema": "test.",
     "replace_schema": "test_"
   }

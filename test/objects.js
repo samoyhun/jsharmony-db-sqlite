@@ -20,22 +20,16 @@ along with this package.  If not, see <http://www.gnu.org/licenses/>.
 var JSHsqlite = require('../index');
 var JSHdb = require('jsharmony-db');
 var shouldBehaveLikeAnObject = require('jsharmony-db/test/shared/objects');
-var assert = require('assert');
-var path = require('path');
-var fs = require('fs');
-var _ = require('lodash');
-var os = require('os');
-var moment = require('moment');
 
 var dbconfig = { _driver: new JSHsqlite(), database: ':memory:' };
 
 var db = new JSHdb(dbconfig);
 db.platform.Config.schema_replacement = [
-  { 
+  {
     "search_schema": "{schema}.",
     "replace_schema": "{schema}_"
   },
-  { 
+  {
     "search_schema": "test.",
     "replace_schema": "test_"
   }
@@ -44,6 +38,6 @@ db.platform.Config.schema_replacement = [
 describe('SQLite Objects',function(){
   var rowcountSql = function(sql) {
     return sql + ';\nselect changes()+(select extra_changes from jsharmony_meta) xrowcount';
-  }
+  };
   shouldBehaveLikeAnObject(db, JSHdb, "'2020-07-07'", '2020-07-07', rowcountSql);
 });

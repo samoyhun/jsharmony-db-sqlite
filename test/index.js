@@ -27,7 +27,7 @@ var dbconfig = { _driver: new JSHsqlite(), database: ':memory:' };
 
 function initDB(db){
   return new JSHdb(dbconfig);
-};
+}
 function disposeDB(db, cb){
   db.Close(cb);
 }
@@ -71,21 +71,21 @@ describe('Basic',function(){
         assert(rslt, 'No database return value');
         callback(err,rslt);
       });
-    }
+    };
     dbtasks['two'] = function (callback) {
       db.Recordset('system', 'select 2 rslttwo', [], {}, function (err, rslt) {
         assert(!err,'Error occurred during database operation');
         assert(rslt, 'No database return value');
         callback(err,rslt);
       });
-    }
+    };
     dbtasks['three'] = function (callback) {
       db.Recordset('system', 'pragma no_statement;', [], {}, function (err, rslt) {
         assert(!err,'Error occurred during database operation');
         assert(!rslt, 'No database return value expected');
         callback(err,rslt);
       });
-    }
+    };
     db.ExecTasks(dbtasks, function (err, dbdata) {
       assert(!err,'Error running ExecTasks');
       assert(dbdata && dbdata['one'] && dbdata['one'].length && dbdata['one'][0] && (dbdata['one'][0].rslt==1),'Invalid ExecTasks return structure');
@@ -236,21 +236,21 @@ describe('Basic',function(){
         assert(rslt, 'No database return value');
         callback(err,rslt);
       });
-    }
+    };
     dbtasks['two'] = function (dbtrans, callback, transtbl) {
       db.Recordset('system', 'select 2 rslttwo', [], {}, dbtrans, function (err, rslt) {
         assert(!err,'Error occurred during database operation');
         assert(rslt, 'No database return value');
         callback(err,rslt);
       });
-    }
+    };
     dbtasks['three'] = function (dbtrans, callback, transtbl) {
       db.Recordset('system', 'pragma no_statement;', [], {}, dbtrans, function (err, rslt) {
         assert(!err,'Error occurred during database operation');
         assert(!rslt, 'No database return value expected');
         callback(err,rslt);
       });
-    }
+    };
     db.ExecTransTasks(dbtasks, function (err, dbdata) {
       assert(!err,'Error running ExecTransTasks');
       assert(dbdata && dbdata['one'] && dbdata['one'].length && dbdata['one'][0] && (dbdata['one'][0].rslt==1),'Invalid ExecTransTasks return structure');
@@ -723,7 +723,7 @@ describe('Basic',function(){
     db.Command('','\
       delete from parent where parent_id=1; \
       ',[],{},function(err,rslt){
-      assert(err && err.message && (err.message.indexOf('FOREIGN KEY constraint failed') >= 0),'Foreign Key works')
+      assert(err && err.message && (err.message.indexOf('FOREIGN KEY constraint failed') >= 0),'Foreign Key works');
       return done();
     });
   });
@@ -731,7 +731,7 @@ describe('Basic',function(){
     db.Command('','\
       update child set parent_id=2; \
       ',[],{},function(err,rslt){
-      assert(err && err.message && (err.message.indexOf('FOREIGN KEY constraint failed') >= 0),'Foreign Key works')
+      assert(err && err.message && (err.message.indexOf('FOREIGN KEY constraint failed') >= 0),'Foreign Key works');
       return done();
     });
   });
@@ -748,10 +748,10 @@ describe('Basic',function(){
     var startTime = Date.now();
     var endTime = Date.now();
     var closed = false;
-    var f = JSHdb.util.waitDefer(function(){ 
+    var f = JSHdb.util.waitDefer(function(){
       assert(!closed,'CLOSE called multiple times');
-      closed = true; 
-      endTime = Date.now(); 
+      closed = true;
+      endTime = Date.now();
     }, 1000);
     setTimeout(function(){ f(); },100);
     setTimeout(function(){ f(); },500);
